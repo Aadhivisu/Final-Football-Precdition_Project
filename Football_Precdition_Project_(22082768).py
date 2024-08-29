@@ -4,6 +4,7 @@
 # In[ ]:
 
 
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -11,46 +12,36 @@ import seaborn as sns
 from datetime import datetime as dt
 from zipfile import ZipFile
 
+# Extracting the ZIP file
+zip_path = '/content/archive(6).zip'
+extract_dir = '/content/Datasets'
 
-# In[ ]:
+with ZipFile(zip_path, 'r') as zip_ref:
+    zip_ref.extractall(extract_dir)
 
-
-from google.colab import drive
-drive.mount('/content/drive')
-
-
-# In[ ]:
-
+print("Extraction complete.")
 
 folder = '/content/Datasets/Datasets'
 
-
-# In[ ]:
-
-
 folder='/content/Datasets/Datasets'
-raw_data_1 = pd.read_csv(r'/content/Datasets/2000-01.csv')
-raw_data_2 = pd.read_csv(r'/content/Datasets/2001-02.csv')
-raw_data_3 = pd.read_csv(r'/content/Datasets/2002-03.csv')
-raw_data_4 = pd.read_csv(r'/content/Datasets/2003-04.csv')
-raw_data_5 = pd.read_csv(r'/content/Datasets/2004-05.csv')
-raw_data_6 = pd.read_csv(r'/content/Datasets/2005-06.csv')
-raw_data_7 = pd.read_csv(r'/content/Datasets/2006-07.csv')
-raw_data_8 = pd.read_csv(r'/content/Datasets/2007-08.csv')
-raw_data_9 = pd.read_csv(r'/content/Datasets/2008-09.csv')
-raw_data_10 = pd.read_csv(r'/content/Datasets/2009-10.csv')
-raw_data_11 = pd.read_csv(r'/content/Datasets/2010-11.csv')
-raw_data_12 = pd.read_csv(r'/content/Datasets/2011-12.csv')
-raw_data_13 = pd.read_csv(r'/content/Datasets/2012-13.csv')
-raw_data_14 = pd.read_csv(r'/content/Datasets/2013-14.csv')
-raw_data_15 = pd.read_csv(r'/content/Datasets/2014-15.csv')
-raw_data_16 = pd.read_csv(r'/content/Datasets/2015-16.csv')
-raw_data_17 = pd.read_csv(r'/content/Datasets/2016-17.csv')
-raw_data_18 = pd.read_csv(r'/content/Datasets/2017-18.csv')
-
-
-# In[ ]:
-
+raw_data_1 = pd.read_csv('/content/Datasets/2000-01.csv')
+raw_data_2 = pd.read_csv('/content/Datasets/2001-02.csv')
+raw_data_3 = pd.read_csv('/content/Datasets/2002-03.csv')
+raw_data_4 = pd.read_csv('/content/Datasets/2003-04.csv')
+raw_data_5 = pd.read_csv('/content/Datasets/2004-05.csv')
+raw_data_6 = pd.read_csv('/content/Datasets/2005-06.csv')
+raw_data_7 = pd.read_csv('/content/Datasets/2006-07.csv')
+raw_data_8 = pd.read_csv('/content/Datasets/2007-08.csv')
+raw_data_9 = pd.read_csv('/content/Datasets/2008-09.csv')
+raw_data_10 = pd.read_csv('/content/Datasets/2009-10.csv')
+raw_data_11 = pd.read_csv('/content/Datasets/2010-11.csv')
+raw_data_12 = pd.read_csv('/content/Datasets/2011-12.csv')
+raw_data_13 = pd.read_csv('/content/Datasets/2012-13.csv')
+raw_data_14 = pd.read_csv('/content/Datasets/2013-14.csv')
+raw_data_15 = pd.read_csv('/content/Datasets/2014-15.csv')
+raw_data_16 = pd.read_csv('/content/Datasets/2015-16.csv')
+raw_data_17 = pd.read_csv('/content/Datasets/2016-17.csv')
+raw_data_18 = pd.read_csv('/content/Datasets/2017-18.csv')
 
 # Combine the manually loaded datasets into a list
 datasets = [raw_data_1, raw_data_2, raw_data_3, raw_data_4, raw_data_5,
@@ -58,25 +49,13 @@ datasets = [raw_data_1, raw_data_2, raw_data_3, raw_data_4, raw_data_5,
             raw_data_11, raw_data_12, raw_data_13, raw_data_14, raw_data_15,
             raw_data_16, raw_data_17, raw_data_18]
 
-
-# In[ ]:
-
-
-seasons = [f'{year}-{str(year + 1)[-2:]}' for year in range(2000, 2018)]
-
-
-# In[ ]:
-
+seasons = [f'{year}-{str(year + 1)[-2:]}' for year in range(2000, 2018)] # Generates a list of strings representing football seasons
 
 for i, season in enumerate(seasons):
     print(f"Data for {season}:")
     display(datasets[i].head())
 
-
-# EDA
-
-# In[ ]:
-
+"""EDA"""
 
 # Displaying data types and null values for all datasets
 for i, season in enumerate(seasons):
@@ -84,10 +63,6 @@ for i, season in enumerate(seasons):
     print(datasets[i].dtypes)
     print("\nMissing values:\n", datasets[i].isnull().sum())
     print("\n")
-
-
-# In[ ]:
-
 
 # Checking unique values and duplicates
 for i, season in enumerate(seasons):
@@ -97,19 +72,11 @@ for i, season in enumerate(seasons):
     print("Number of duplicates:", datasets[i].duplicated().sum())
     print("\n")
 
-
-# In[ ]:
-
-
 # Summary statistics for numeric and categorical features
 for i, season in enumerate(seasons):
     print(f"Summary Statistics for {season}:")
     print(datasets[i].describe(include='all'))
     print("\n")
-
-
-# In[ ]:
-
 
 # Distribution of Goals
 for i, season in enumerate(seasons):
@@ -122,10 +89,6 @@ for i, season in enumerate(seasons):
     plt.legend()
     plt.show()
 
-
-# In[ ]:
-
-
 # Boxplots for Home and Away Goals
 for i, season in enumerate(seasons):
     plt.figure(figsize=(10, 6))
@@ -136,10 +99,6 @@ for i, season in enumerate(seasons):
     plt.xticks([0, 1], ['Home', 'Away'])
     plt.show()
 
-
-# In[ ]:
-
-
 # Count plots for Full Time Result (FTR)
 for i, season in enumerate(seasons):
     plt.figure(figsize=(8, 4))
@@ -148,10 +107,6 @@ for i, season in enumerate(seasons):
     plt.xlabel('Result')
     plt.ylabel('Count')
     plt.show()
-
-
-# In[ ]:
-
 
 # Correlation Matrix
 for i, season in enumerate(seasons):
@@ -162,20 +117,12 @@ for i, season in enumerate(seasons):
     plt.title(f'Correlation Matrix - {season}')
     plt.show()
 
-
-# In[ ]:
-
-
 # Average goals scored by Home and Away teams
 for i, season in enumerate(seasons):
     home_goals = datasets[i]['FTHG'].mean()
     away_goals = datasets[i]['FTAG'].mean()
     print(f"Average Goals Scored - {season}:")
     print(f"Home: {home_goals:.2f}, Away: {away_goals:.2f}\n")
-
-
-# In[ ]:
-
 
 # Calculating win rates for home, away, and draws
 for i, season in enumerate(seasons):
@@ -189,10 +136,6 @@ for i, season in enumerate(seasons):
     print(f"Away Win Rate: {away_wins / total_matches * 100:.2f}%")
     print(f"Draw Rate: {draws / total_matches * 100:.2f}%\n")
 
-
-# In[ ]:
-
-
 # Calculating goal differences for each match
 for i, season in enumerate(seasons):
     datasets[i]['GoalDifference'] = datasets[i]['FTHG'] - datasets[i]['FTAG']
@@ -202,10 +145,6 @@ for i, season in enumerate(seasons):
     plt.xlabel('Goal Difference')
     plt.ylabel('Frequency')
     plt.show()
-
-
-# In[ ]:
-
 
 # Analysis of total goals scored over the season
 total_goals = []
@@ -221,20 +160,12 @@ plt.ylabel('Total Goals')
 plt.xticks(rotation=45)
 plt.show()
 
-
-# In[ ]:
-
-
 # Combine all season datasets into a single DataFrame
 combined_data = pd.concat(datasets, ignore_index=True)
 
 # Display the first few rows of the combined dataset
 print("Combined DataFrame:")
 display(combined_data.head())
-
-
-# In[ ]:
-
 
 # Compute the correlation matrix for the combined dataset
 numeric_data_combined = combined_data.select_dtypes(include=[np.number])  # Select only numeric columns
@@ -243,10 +174,6 @@ correlation_matrix_combined = numeric_data_combined.corr()
 # Display the correlation matrix
 print("Combined Correlation Matrix:")
 display(correlation_matrix_combined)
-
-
-# In[ ]:
-
 
 # Select required columns
 columns_req = ['Date', 'HomeTeam', 'AwayTeam', 'FTHG', 'FTAG', 'FTR']
@@ -294,12 +221,6 @@ plt.legend()
 plt.title('Distribution of Goals Scored')
 plt.show()
 
-
-
-
-# In[ ]:
-
-
 # Select only numeric columns for correlation matrix calculation
 numeric_cols = all_data.select_dtypes(include=[np.number]).columns
 corr = all_data[numeric_cols].corr()
@@ -309,13 +230,25 @@ sns.heatmap(corr, annot=True, fmt=".2f", cmap='coolwarm')
 plt.title('Correlation Matrix')
 plt.show()
 
+# Additional visualizations and EDA
+# Distribution of goals scored by home and away teams
+sns.histplot(all_data['FTHG'], bins=20, kde=True, color='blue', label='Home Team Goals') # Use 'all_data' instead of 'playing_stat'
+sns.histplot(all_data['FTAG'], bins=20, kde=True, color='red', label='Away Team Goals') # Use 'all_data' instead of 'playing_stat'
+plt.legend()
+plt.title('Distribution of Goals Scored')
+plt.show()
 
-# Feature Engineering
+# Correlation Heatmap of all features
+numeric_features = all_data.select_dtypes(include=[np.number]) # Use 'all_data' instead of 'playing_stat'
+corr_matrix = numeric_features.corr()
+plt.figure(figsize=(12, 8))
+sns.heatmap(corr_matrix, annot=True, fmt='.2f', cmap='coolwarm', linewidths=0.5)
+plt.title('Correlation Matrix of Features')
+plt.show()
 
-# In[ ]:
+"""Feature Engineering"""
 
-
-def get_goals_scored(playing_stat):
+def scored_goals(playing_stat):
     teams = {team: [] for team in playing_stat['HomeTeam'].unique()}
     for i in range(len(playing_stat)):
         HTGS = playing_stat.iloc[i]['FTHG']
@@ -329,7 +262,7 @@ def get_goals_scored(playing_stat):
         GoalsScored[i] = GoalsScored[i] + GoalsScored[i-1]
     return GoalsScored
 
-def get_goals_conceded(playing_stat):
+def conceded_goals(playing_stat):
     teams = {team: [] for team in playing_stat['HomeTeam'].unique()}
     for i in range(len(playing_stat)):
         ATGC = playing_stat.iloc[i]['FTHG']
@@ -343,9 +276,9 @@ def get_goals_conceded(playing_stat):
         GoalsConceded[i] = GoalsConceded[i] + GoalsConceded[i-1]
     return GoalsConceded
 
-def get_gss(playing_stat):
-    GC = get_goals_conceded(playing_stat)
-    GS = get_goals_scored(playing_stat)
+def gss(playing_stat):
+    GC = conceded_goals(playing_stat)
+    GS = scored_goals(playing_stat)
     j = 0
     HTGS = []
     ATGS = []
@@ -369,34 +302,30 @@ def get_gss(playing_stat):
     return playing_stat
 
 # Apply the feature engineering functions to each dataset
-playing_statistics_1 = get_gss(playing_statistics_1)
-playing_statistics_2 = get_gss(playing_statistics_2)
-playing_statistics_3 = get_gss(playing_statistics_3)
-playing_statistics_4 = get_gss(playing_statistics_4)
-playing_statistics_5 = get_gss(playing_statistics_5)
-playing_statistics_6 = get_gss(playing_statistics_6)
-playing_statistics_7 = get_gss(playing_statistics_7)
-playing_statistics_8 = get_gss(playing_statistics_8)
-playing_statistics_9 = get_gss(playing_statistics_9)
-playing_statistics_10 = get_gss(playing_statistics_10)
-playing_statistics_11 = get_gss(playing_statistics_11)
-playing_statistics_12 = get_gss(playing_statistics_12)
-playing_statistics_13 = get_gss(playing_statistics_13)
-playing_statistics_14 = get_gss(playing_statistics_14)
-playing_statistics_15 = get_gss(playing_statistics_15)
-playing_statistics_16 = get_gss(playing_statistics_16)
-playing_statistics_17 = get_gss(playing_statistics_17)
-playing_statistics_18 = get_gss(playing_statistics_18)
-
-
-# In[ ]:
-
+playing_statistics_1 = gss(playing_statistics_1)
+playing_statistics_2 = gss(playing_statistics_2)
+playing_statistics_3 = gss(playing_statistics_3)
+playing_statistics_4 = gss(playing_statistics_4)
+playing_statistics_5 = gss(playing_statistics_5)
+playing_statistics_6 = gss(playing_statistics_6)
+playing_statistics_7 = gss(playing_statistics_7)
+playing_statistics_8 = gss(playing_statistics_8)
+playing_statistics_9 = gss(playing_statistics_9)
+playing_statistics_10 = gss(playing_statistics_10)
+playing_statistics_11 = gss(playing_statistics_11)
+playing_statistics_12 = gss(playing_statistics_12)
+playing_statistics_13 = gss(playing_statistics_13)
+playing_statistics_14 = gss(playing_statistics_14)
+playing_statistics_15 = gss(playing_statistics_15)
+playing_statistics_16 = gss(playing_statistics_16)
+playing_statistics_17 = gss(playing_statistics_17)
+playing_statistics_18 = gss(playing_statistics_18)
 
 import pandas as pd
 
 # Assuming 'playing_stat' is the DataFrame for the match statistics
 
-def get_matchres(playing_stat):
+def matchres(playing_stat):
     teams = {team: [] for team in playing_stat['HomeTeam'].unique()}
     for i in range(len(playing_stat)):
         if playing_stat.iloc[i].FTR == 'H':
@@ -410,7 +339,7 @@ def get_matchres(playing_stat):
             teams[playing_stat.iloc[i].HomeTeam].append('D')
     return pd.DataFrame(data=teams, index=range(1, 39)).T
 
-def get_points(result):
+def points_get(result):
     if result == 'W':
         return 3
     elif result == 'D':
@@ -418,17 +347,17 @@ def get_points(result):
     else:
         return 0
 
-def get_cuml_points(matchres):
-    matchres_points = matchres.applymap(get_points)
+def cuml_points(matchres):
+    matchres_points = matchres.applymap(points_get)
     num_matchweeks = matchres_points.shape[1]
     matchres_points.insert(0, 0, 0)
     for i in range(2, num_matchweeks + 1):
         matchres_points[i] = matchres_points[i] + matchres_points[i - 1]
     return matchres_points
 
-def get_agg_points(playing_stat):
-    matchres = get_matchres(playing_stat)
-    cum_pts = get_cuml_points(matchres)
+def get_aggg_points(playing_stat):
+    matchres = matchres(playing_stat)
+    cum_pts = cuml_points(matchres)
     HTP = []
     ATP = []
     j = 0
@@ -446,8 +375,8 @@ def get_agg_points(playing_stat):
     playing_stat['ATP'] = ATP
     return playing_stat
 
-def get_form(playing_stat, num):
-    matchres = get_matchres(playing_stat)
+def formget(playing_stat, num):
+    matchres = matchres(playing_stat)
     form_final = matchres.copy()
     for i in range(num, 39):
         form_final[i] = ''
@@ -455,8 +384,8 @@ def get_form(playing_stat, num):
             form_final[i] += matchres[i-j]
     return form_final
 
-def add_form(playing_stat, num):
-    form = get_form(playing_stat, num)
+def addform(playing_stat, num):
+    form = formget(playing_stat, num)
     h = ['M' for _ in range(num * 10)]
     a = ['M' for _ in range(num * 10)]
     j = num
@@ -473,54 +402,50 @@ def add_form(playing_stat, num):
     playing_stat[f'AM{num}'] = a
     return playing_stat
 
-def add_form_df(playing_statistics):
+def addform_df(playing_statistics):
     for num in range(1, 6):
-        playing_statistics = [add_form(df, num) for df in playing_statistics]
+        playing_statistics = [addform(df, num) for df in playing_statistics]
     return playing_statistics
 
 # Apply cumulative points calculation
-playing_statistics_1 = get_agg_points(playing_statistics_1)
-playing_statistics_2 = get_agg_points(playing_statistics_2)
-playing_statistics_3 = get_agg_points(playing_statistics_3)
-playing_statistics_4 = get_agg_points(playing_statistics_4)
-playing_statistics_5 = get_agg_points(playing_statistics_5)
-playing_statistics_6 = get_agg_points(playing_statistics_6)
-playing_statistics_7 = get_agg_points(playing_statistics_7)
-playing_statistics_8 = get_agg_points(playing_statistics_8)
-playing_statistics_9 = get_agg_points(playing_statistics_9)
-playing_statistics_10 = get_agg_points(playing_statistics_10)
-playing_statistics_11 = get_agg_points(playing_statistics_11)
-playing_statistics_12 = get_agg_points(playing_statistics_12)
-playing_statistics_13 = get_agg_points(playing_statistics_13)
-playing_statistics_14 = get_agg_points(playing_statistics_14)
-playing_statistics_15 = get_agg_points(playing_statistics_15)
-playing_statistics_16 = get_agg_points(playing_statistics_16)
-playing_statistics_17 = get_agg_points(playing_statistics_17)
-playing_statistics_18 = get_agg_points(playing_statistics_18)
+playing_statistics_1 = get_aggg_points(playing_statistics_1)
+playing_statistics_2 = get_aggg_points(playing_statistics_2)
+playing_statistics_3 = get_aggg_points(playing_statistics_3)
+playing_statistics_4 = get_aggg_points(playing_statistics_4)
+playing_statistics_5 = get_aggg_points(playing_statistics_5)
+playing_statistics_6 = get_aggg_points(playing_statistics_6)
+playing_statistics_7 = get_aggg_points(playing_statistics_7)
+playing_statistics_8 = get_aggg_points(playing_statistics_8)
+playing_statistics_9 = get_aggg_points(playing_statistics_9)
+playing_statistics_10 = get_aggg_points(playing_statistics_10)
+playing_statistics_11 = get_aggg_points(playing_statistics_11)
+playing_statistics_12 = get_aggg_points(playing_statistics_12)
+playing_statistics_13 = get_aggg_points(playing_statistics_13)
+playing_statistics_14 = get_aggg_points(playing_statistics_14)
+playing_statistics_15 = get_aggg_points(playing_statistics_15)
+playing_statistics_16 = get_aggg_points(playing_statistics_16)
+playing_statistics_17 = get_aggg_points(playing_statistics_17)
+playing_statistics_18 = get_aggg_points(playing_statistics_18)
 
 # Adding form (last n matches) data
-playing_statistics_1 = add_form_df([playing_statistics_1])[0]
-playing_statistics_2 = add_form_df([playing_statistics_2])[0]
-playing_statistics_3 = add_form_df([playing_statistics_3])[0]
-playing_statistics_4 = add_form_df([playing_statistics_4])[0]
-playing_statistics_5 = add_form_df([playing_statistics_5])[0]
-playing_statistics_6 = add_form_df([playing_statistics_6])[0]
-playing_statistics_7 = add_form_df([playing_statistics_7])[0]
-playing_statistics_8 = add_form_df([playing_statistics_8])[0]
-playing_statistics_9 = add_form_df([playing_statistics_9])[0]
-playing_statistics_10 = add_form_df([playing_statistics_10])[0]
-playing_statistics_11 = add_form_df([playing_statistics_11])[0]
-playing_statistics_12 = add_form_df([playing_statistics_12])[0]
-playing_statistics_13 = add_form_df([playing_statistics_13])[0]
-playing_statistics_14 = add_form_df([playing_statistics_14])[0]
-playing_statistics_15 = add_form_df([playing_statistics_15])[0]
-playing_statistics_16 = add_form_df([playing_statistics_16])[0]
-playing_statistics_17 = add_form_df([playing_statistics_17])[0]
-playing_statistics_18 = add_form_df([playing_statistics_18])[0]
-
-
-# In[ ]:
-
+playing_statistics_1 = addform_df([playing_statistics_1])[0]
+playing_statistics_2 = addform_df([playing_statistics_2])[0]
+playing_statistics_3 = addform_df([playing_statistics_3])[0]
+playing_statistics_4 = addform_df([playing_statistics_4])[0]
+playing_statistics_5 = addform_df([playing_statistics_5])[0]
+playing_statistics_6 = addform_df([playing_statistics_6])[0]
+playing_statistics_7 = addform_df([playing_statistics_7])[0]
+playing_statistics_8 = addform_df([playing_statistics_8])[0]
+playing_statistics_9 = addform_df([playing_statistics_9])[0]
+playing_statistics_10 = addform_df([playing_statistics_10])[0]
+playing_statistics_11 = addform_df([playing_statistics_11])[0]
+playing_statistics_12 = addform_df([playing_statistics_12])[0]
+playing_statistics_13 = addform_df([playing_statistics_13])[0]
+playing_statistics_14 = addform_df([playing_statistics_14])[0]
+playing_statistics_15 = addform_df([playing_statistics_15])[0]
+playing_statistics_16 = addform_df([playing_statistics_16])[0]
+playing_statistics_17 = addform_df([playing_statistics_17])[0]
+playing_statistics_18 = addform_df([playing_statistics_18])[0]
 
 # Preparing the final dataset by concatenating all seasons' data
 playing_stat = pd.concat([
@@ -542,14 +467,14 @@ if 'HTFormPts' not in playing_stat.columns or 'ATFormPts' not in playing_stat.co
         playing_stat['AM1'] + playing_stat['AM2'] + playing_stat['AM3'] + playing_stat['AM4'] + playing_stat['AM5']
     )
 
-    def get_form_points(string):
+    def formget_points(string):
         sum_points = 0
         for letter in string:
-            sum_points += get_points(letter)
+            sum_points += points_get(letter)
         return sum_points
 
-    playing_stat['HTFormPts'] = playing_stat['HTFormPtsStr'].apply(get_form_points)
-    playing_stat['ATFormPts'] = playing_stat['ATFormPtsStr'].apply(get_form_points)
+    playing_stat['HTFormPts'] = playing_stat['HTFormPtsStr'].apply(formget_points)
+    playing_stat['ATFormPts'] = playing_stat['ATFormPtsStr'].apply(formget_points)
 
 # Calculating additional features
 playing_stat['HTGD'] = playing_stat['HTGS'] - playing_stat['HTGC']
@@ -586,12 +511,6 @@ playing_stat.to_csv('/content/final_dataset.csv', index=False)
 # Loading the dataset for further use
 dataset = pd.read_csv('/content/final_dataset.csv')
 
-
-
-
-# In[ ]:
-
-
 columns_req = ['Date','HomeTeam','AwayTeam','FTHG','FTAG','FTR']
 
 playing_statistics_1 = raw_data_1[columns_req]
@@ -613,13 +532,9 @@ playing_statistics_16 = raw_data_16[columns_req]
 playing_statistics_17 = raw_data_17[columns_req]
 playing_statistics_18 = raw_data_18[columns_req]
 
-
-# In[ ]:
-
-
 import pandas as pd
 
-def get_goals_scored(playing_stat):
+def scored_goals(playing_stat):
     # Create a dictionary with team names as keys
     teams = {team: [] for team in playing_stat['HomeTeam'].unique()}
 
@@ -644,7 +559,7 @@ def get_goals_scored(playing_stat):
     return GoalsScored
 
 
-def get_goals_conceded(playing_stat):
+def conceded_goals(playing_stat):
     # Create a dictionary with team names as keys
     teams = {team: [] for team in playing_stat['HomeTeam'].unique()}
 
@@ -668,9 +583,9 @@ def get_goals_conceded(playing_stat):
 
     return GoalsConceded
 
-def get_gss(playing_stat):
-    GC = get_goals_conceded(playing_stat)
-    GS = get_goals_scored(playing_stat)
+def gss(playing_stat):
+    GC = conceded_goals(playing_stat)
+    GS = scored_goals(playing_stat)
 
     j = 0
     HTGS = []
@@ -701,32 +616,28 @@ def get_gss(playing_stat):
     return playing_stat
 
 # Apply to each dataset
-playing_statistics_1 = get_gss(playing_statistics_1)
-playing_statistics_2 = get_gss(playing_statistics_2)
-playing_statistics_3 = get_gss(playing_statistics_3)
-playing_statistics_4 = get_gss(playing_statistics_4)
-playing_statistics_5 = get_gss(playing_statistics_5)
-playing_statistics_6 = get_gss(playing_statistics_6)
-playing_statistics_7 = get_gss(playing_statistics_7)
-playing_statistics_8 = get_gss(playing_statistics_8)
-playing_statistics_9 = get_gss(playing_statistics_9)
-playing_statistics_10 = get_gss(playing_statistics_10)
-playing_statistics_11 = get_gss(playing_statistics_11)
-playing_statistics_12 = get_gss(playing_statistics_12)
-playing_statistics_13 = get_gss(playing_statistics_13)
-playing_statistics_14 = get_gss(playing_statistics_14)
-playing_statistics_15 = get_gss(playing_statistics_15)
-playing_statistics_16 = get_gss(playing_statistics_16)
-playing_statistics_17 = get_gss(playing_statistics_17)
-playing_statistics_18 = get_gss(playing_statistics_18)
-
-
-# In[ ]:
-
+playing_statistics_1 = gss(playing_statistics_1)
+playing_statistics_2 = gss(playing_statistics_2)
+playing_statistics_3 = gss(playing_statistics_3)
+playing_statistics_4 = gss(playing_statistics_4)
+playing_statistics_5 = gss(playing_statistics_5)
+playing_statistics_6 = gss(playing_statistics_6)
+playing_statistics_7 = gss(playing_statistics_7)
+playing_statistics_8 = gss(playing_statistics_8)
+playing_statistics_9 = gss(playing_statistics_9)
+playing_statistics_10 = gss(playing_statistics_10)
+playing_statistics_11 = gss(playing_statistics_11)
+playing_statistics_12 = gss(playing_statistics_12)
+playing_statistics_13 = gss(playing_statistics_13)
+playing_statistics_14 = gss(playing_statistics_14)
+playing_statistics_15 = gss(playing_statistics_15)
+playing_statistics_16 = gss(playing_statistics_16)
+playing_statistics_17 = gss(playing_statistics_17)
+playing_statistics_18 = gss(playing_statistics_18)
 
 import pandas as pd
 
-def get_points(result):
+def points_get(result):
     if result == 'W':
         return 3
     elif result == 'D':
@@ -735,9 +646,9 @@ def get_points(result):
         return 0
 
 
-def get_cuml_points(matchres):
+def cuml_points(matchres):
     # Convert match results to points
-    matchres_points = matchres.applymap(get_points)
+    matchres_points = matchres.applymap(points_get)
 
     # Ensure there's no issue with index when initializing the cumulative points
     num_matchweeks = matchres_points.shape[1]
@@ -750,7 +661,7 @@ def get_cuml_points(matchres):
     return matchres_points
 
 
-def get_matchres(playing_stat):
+def matchres(playing_stat):
     # Create a dictionary with team names as keys
     teams = {team: [] for team in playing_stat['HomeTeam'].unique()}
 
@@ -772,9 +683,9 @@ def get_matchres(playing_stat):
     # Create a DataFrame with the results and ensure correct indexing
     return pd.DataFrame(data=teams, index=range(1, num_matchweeks + 1)).T
 
-def get_agg_points(playing_stat):
-    matchres = get_matchres(playing_stat)
-    cum_pts = get_cuml_points(matchres)
+def get_aggg_points(playing_stat):
+    matchres = matchres(playing_stat)
+    cum_pts = cuml_points(matchres)
     HTP = []
     ATP = []
     j = 0
@@ -798,31 +709,27 @@ def get_agg_points(playing_stat):
     return playing_stat
 
 # Apply to each dataset
-playing_statistics_1 = get_gss(playing_statistics_1)
-playing_statistics_2 = get_gss(playing_statistics_2)
-playing_statistics_3 = get_gss(playing_statistics_3)
-playing_statistics_4 = get_gss(playing_statistics_4)
-playing_statistics_5 = get_gss(playing_statistics_5)
-playing_statistics_6 = get_gss(playing_statistics_6)
-playing_statistics_7 = get_gss(playing_statistics_7)
-playing_statistics_8 = get_gss(playing_statistics_8)
-playing_statistics_9 = get_gss(playing_statistics_9)
-playing_statistics_10 = get_gss(playing_statistics_10)
-playing_statistics_11 = get_gss(playing_statistics_11)
-playing_statistics_12 = get_gss(playing_statistics_12)
-playing_statistics_13 = get_gss(playing_statistics_13)
-playing_statistics_14 = get_gss(playing_statistics_14)
-playing_statistics_15 = get_gss(playing_statistics_15)
-playing_statistics_16 = get_gss(playing_statistics_16)
-playing_statistics_17 = get_gss(playing_statistics_17)
-playing_statistics_18 = get_gss(playing_statistics_18)
+playing_statistics_1 = gss(playing_statistics_1)
+playing_statistics_2 = gss(playing_statistics_2)
+playing_statistics_3 = gss(playing_statistics_3)
+playing_statistics_4 = gss(playing_statistics_4)
+playing_statistics_5 = gss(playing_statistics_5)
+playing_statistics_6 = gss(playing_statistics_6)
+playing_statistics_7 = gss(playing_statistics_7)
+playing_statistics_8 = gss(playing_statistics_8)
+playing_statistics_9 = gss(playing_statistics_9)
+playing_statistics_10 = gss(playing_statistics_10)
+playing_statistics_11 = gss(playing_statistics_11)
+playing_statistics_12 = gss(playing_statistics_12)
+playing_statistics_13 = gss(playing_statistics_13)
+playing_statistics_14 = gss(playing_statistics_14)
+playing_statistics_15 = gss(playing_statistics_15)
+playing_statistics_16 = gss(playing_statistics_16)
+playing_statistics_17 = gss(playing_statistics_17)
+playing_statistics_18 = gss(playing_statistics_18)
 
-
-# In[ ]:
-
-
-def get_form(playing_stat,num):
-    form = get_matchres(playing_stat)
+def formget(playing_stat,num):
+    form = matchres(playing_stat)
     form_final = form.copy()
     for i in range(num,39):
         form_final[i] = ''
@@ -832,8 +739,8 @@ def get_form(playing_stat,num):
             j += 1
     return form_final
 
-def add_form(playing_stat,num):
-    form = get_form(playing_stat,num)
+def addform(playing_stat,num):
+    form = formget(playing_stat,num)
     h = ['M' for i in range(num * 10)]  # since form is not available for n MW (n*10)
     a = ['M' for i in range(num * 10)]
 
@@ -858,40 +765,36 @@ def add_form(playing_stat,num):
     return playing_stat
 
 
-def add_form_df(playing_statistics):
-    playing_statistics = add_form(playing_statistics,1)
-    playing_statistics = add_form(playing_statistics,2)
-    playing_statistics = add_form(playing_statistics,3)
-    playing_statistics = add_form(playing_statistics,4)
-    playing_statistics = add_form(playing_statistics,5)
+def addform_df(playing_statistics):
+    playing_statistics = addform(playing_statistics,1)
+    playing_statistics = addform(playing_statistics,2)
+    playing_statistics = addform(playing_statistics,3)
+    playing_statistics = addform(playing_statistics,4)
+    playing_statistics = addform(playing_statistics,5)
     return playing_statistics
 
 # Make changes to df
-playing_statistics_1 = add_form_df(playing_statistics_1)
-playing_statistics_2 = add_form_df(playing_statistics_2)
-playing_statistics_3 = add_form_df(playing_statistics_3)
-playing_statistics_4 = add_form_df(playing_statistics_4)
-playing_statistics_5 = add_form_df(playing_statistics_5)
-playing_statistics_6 = add_form_df(playing_statistics_6)
-playing_statistics_7 = add_form_df(playing_statistics_7)
-playing_statistics_8 = add_form_df(playing_statistics_8)
-playing_statistics_9 = add_form_df(playing_statistics_9)
-playing_statistics_10 = add_form_df(playing_statistics_10)
-playing_statistics_11 = add_form_df(playing_statistics_11)
-playing_statistics_12 = add_form_df(playing_statistics_12)
-playing_statistics_13 = add_form_df(playing_statistics_13)
-playing_statistics_14 = add_form_df(playing_statistics_14)
-playing_statistics_15 = add_form_df(playing_statistics_15)
-playing_statistics_16 = add_form_df(playing_statistics_16)
-playing_statistics_17 = add_form_df(playing_statistics_17)
-playing_statistics_18 = add_form_df(playing_statistics_18)
+playing_statistics_1 = addform_df(playing_statistics_1)
+playing_statistics_2 = addform_df(playing_statistics_2)
+playing_statistics_3 = addform_df(playing_statistics_3)
+playing_statistics_4 = addform_df(playing_statistics_4)
+playing_statistics_5 = addform_df(playing_statistics_5)
+playing_statistics_6 = addform_df(playing_statistics_6)
+playing_statistics_7 = addform_df(playing_statistics_7)
+playing_statistics_8 = addform_df(playing_statistics_8)
+playing_statistics_9 = addform_df(playing_statistics_9)
+playing_statistics_10 = addform_df(playing_statistics_10)
+playing_statistics_11 = addform_df(playing_statistics_11)
+playing_statistics_12 = addform_df(playing_statistics_12)
+playing_statistics_13 = addform_df(playing_statistics_13)
+playing_statistics_14 = addform_df(playing_statistics_14)
+playing_statistics_15 = addform_df(playing_statistics_15)
+playing_statistics_16 = addform_df(playing_statistics_16)
+playing_statistics_17 = addform_df(playing_statistics_17)
+playing_statistics_18 = addform_df(playing_statistics_18)
 
-
-# In[ ]:
-
-
-def get_form(playing_stat,num):
-    form = get_matchres(playing_stat)
+def formget(playing_stat,num):
+    form = matchres(playing_stat)
     form_final = form.copy()
     for i in range(num,39):
         form_final[i] = ''
@@ -901,8 +804,8 @@ def get_form(playing_stat,num):
             j += 1
     return form_final
 
-def add_form(playing_stat,num):
-    form = get_form(playing_stat,num)
+def addform(playing_stat,num):
+    form = formget(playing_stat,num)
     h = ['M' for i in range(num * 10)]  # since form is not available for n MW (n*10)
     a = ['M' for i in range(num * 10)]
 
@@ -927,40 +830,36 @@ def add_form(playing_stat,num):
     return playing_stat
 
 
-def add_form_df(playing_statistics):
-    playing_statistics = add_form(playing_statistics,1)
-    playing_statistics = add_form(playing_statistics,2)
-    playing_statistics = add_form(playing_statistics,3)
-    playing_statistics = add_form(playing_statistics,4)
-    playing_statistics = add_form(playing_statistics,5)
+def addform_df(playing_statistics):
+    playing_statistics = addform(playing_statistics,1)
+    playing_statistics = addform(playing_statistics,2)
+    playing_statistics = addform(playing_statistics,3)
+    playing_statistics = addform(playing_statistics,4)
+    playing_statistics = addform(playing_statistics,5)
     return playing_statistics
 
 # Make changes to df
-playing_statistics_1 = add_form_df(playing_statistics_1)
-playing_statistics_2 = add_form_df(playing_statistics_2)
-playing_statistics_3 = add_form_df(playing_statistics_3)
-playing_statistics_4 = add_form_df(playing_statistics_4)
-playing_statistics_5 = add_form_df(playing_statistics_5)
-playing_statistics_6 = add_form_df(playing_statistics_6)
-playing_statistics_7 = add_form_df(playing_statistics_7)
-playing_statistics_8 = add_form_df(playing_statistics_8)
-playing_statistics_9 = add_form_df(playing_statistics_9)
-playing_statistics_10 = add_form_df(playing_statistics_10)
-playing_statistics_11 = add_form_df(playing_statistics_11)
-playing_statistics_12 = add_form_df(playing_statistics_12)
-playing_statistics_13 = add_form_df(playing_statistics_13)
-playing_statistics_14 = add_form_df(playing_statistics_14)
-playing_statistics_15 = add_form_df(playing_statistics_15)
-playing_statistics_16 = add_form_df(playing_statistics_16)
-playing_statistics_17 = add_form_df(playing_statistics_17)
-playing_statistics_18 = add_form_df(playing_statistics_18)
+playing_statistics_1 = addform_df(playing_statistics_1)
+playing_statistics_2 = addform_df(playing_statistics_2)
+playing_statistics_3 = addform_df(playing_statistics_3)
+playing_statistics_4 = addform_df(playing_statistics_4)
+playing_statistics_5 = addform_df(playing_statistics_5)
+playing_statistics_6 = addform_df(playing_statistics_6)
+playing_statistics_7 = addform_df(playing_statistics_7)
+playing_statistics_8 = addform_df(playing_statistics_8)
+playing_statistics_9 = addform_df(playing_statistics_9)
+playing_statistics_10 = addform_df(playing_statistics_10)
+playing_statistics_11 = addform_df(playing_statistics_11)
+playing_statistics_12 = addform_df(playing_statistics_12)
+playing_statistics_13 = addform_df(playing_statistics_13)
+playing_statistics_14 = addform_df(playing_statistics_14)
+playing_statistics_15 = addform_df(playing_statistics_15)
+playing_statistics_16 = addform_df(playing_statistics_16)
+playing_statistics_17 = addform_df(playing_statistics_17)
+playing_statistics_18 = addform_df(playing_statistics_18)
 
-
-# In[ ]:
-
-
-def get_form(playing_stat,num):
-    form = get_matchres(playing_stat)
+def formget(playing_stat,num):
+    form = matchres(playing_stat)
     form_final = form.copy()
     for i in range(num,39):
         form_final[i] = ''
@@ -970,8 +869,8 @@ def get_form(playing_stat,num):
             j += 1
     return form_final
 
-def add_form(playing_stat,num):
-    form = get_form(playing_stat,num)
+def addform(playing_stat,num):
+    form = formget(playing_stat,num)
     h = ['M' for i in range(num * 10)]  # since form is not available for n MW (n*10)
     a = ['M' for i in range(num * 10)]
 
@@ -996,37 +895,33 @@ def add_form(playing_stat,num):
     return playing_stat
 
 
-def add_form_df(playing_statistics):
-    playing_statistics = add_form(playing_statistics,1)
-    playing_statistics = add_form(playing_statistics,2)
-    playing_statistics = add_form(playing_statistics,3)
-    playing_statistics = add_form(playing_statistics,4)
-    playing_statistics = add_form(playing_statistics,5)
+def addform_df(playing_statistics):
+    playing_statistics = addform(playing_statistics,1)
+    playing_statistics = addform(playing_statistics,2)
+    playing_statistics = addform(playing_statistics,3)
+    playing_statistics = addform(playing_statistics,4)
+    playing_statistics = addform(playing_statistics,5)
     return playing_statistics
 
 # Make changes to df
-playing_statistics_1 = add_form_df(playing_statistics_1)
-playing_statistics_2 = add_form_df(playing_statistics_2)
-playing_statistics_3 = add_form_df(playing_statistics_3)
-playing_statistics_4 = add_form_df(playing_statistics_4)
-playing_statistics_5 = add_form_df(playing_statistics_5)
-playing_statistics_6 = add_form_df(playing_statistics_6)
-playing_statistics_7 = add_form_df(playing_statistics_7)
-playing_statistics_8 = add_form_df(playing_statistics_8)
-playing_statistics_9 = add_form_df(playing_statistics_9)
-playing_statistics_10 = add_form_df(playing_statistics_10)
-playing_statistics_11 = add_form_df(playing_statistics_11)
-playing_statistics_12 = add_form_df(playing_statistics_12)
-playing_statistics_13 = add_form_df(playing_statistics_13)
-playing_statistics_14 = add_form_df(playing_statistics_14)
-playing_statistics_15 = add_form_df(playing_statistics_15)
-playing_statistics_16 = add_form_df(playing_statistics_16)
-playing_statistics_17 = add_form_df(playing_statistics_17)
-playing_statistics_18 = add_form_df(playing_statistics_18)
-
-
-# In[ ]:
-
+playing_statistics_1 = addform_df(playing_statistics_1)
+playing_statistics_2 = addform_df(playing_statistics_2)
+playing_statistics_3 = addform_df(playing_statistics_3)
+playing_statistics_4 = addform_df(playing_statistics_4)
+playing_statistics_5 = addform_df(playing_statistics_5)
+playing_statistics_6 = addform_df(playing_statistics_6)
+playing_statistics_7 = addform_df(playing_statistics_7)
+playing_statistics_8 = addform_df(playing_statistics_8)
+playing_statistics_9 = addform_df(playing_statistics_9)
+playing_statistics_10 = addform_df(playing_statistics_10)
+playing_statistics_11 = addform_df(playing_statistics_11)
+playing_statistics_12 = addform_df(playing_statistics_12)
+playing_statistics_13 = addform_df(playing_statistics_13)
+playing_statistics_14 = addform_df(playing_statistics_14)
+playing_statistics_15 = addform_df(playing_statistics_15)
+playing_statistics_16 = addform_df(playing_statistics_16)
+playing_statistics_17 = addform_df(playing_statistics_17)
+playing_statistics_18 = addform_df(playing_statistics_18)
 
 import pandas as pd
 
@@ -1063,10 +958,6 @@ playing_statistics_16 = rearrange_columns(playing_statistics_16, cols)
 playing_statistics_17 = rearrange_columns(playing_statistics_17, cols)
 playing_statistics_18 = rearrange_columns(playing_statistics_18, cols)
 
-
-# In[ ]:
-
-
 def get_mw(playing_stat):
     j = 1
     MatchWeek = []
@@ -1096,10 +987,6 @@ playing_statistics_16 = get_mw(playing_statistics_16)
 playing_statistics_17 = get_mw(playing_statistics_17)
 playing_statistics_18 = get_mw(playing_statistics_18)
 
-
-# In[ ]:
-
-
 playing_stat = pd.concat([playing_statistics_1,
                           playing_statistics_2,
                           playing_statistics_3,
@@ -1122,17 +1009,17 @@ playing_stat = pd.concat([playing_statistics_1,
 
 
 # Gets the form points.
-def get_form_points(string):
+def formget_points(string):
     sum = 0
     for letter in string:
-        sum += get_points(letter)
+        sum += points_get(letter)
     return sum
 
 playing_stat['HTFormPtsStr'] = playing_stat['HM1'] + playing_stat['HM2'] + playing_stat['HM3'] + playing_stat['HM4'] + playing_stat['HM5']
 playing_stat['ATFormPtsStr'] = playing_stat['AM1'] + playing_stat['AM2'] + playing_stat['AM3'] + playing_stat['AM4'] + playing_stat['AM5']
 
-playing_stat['HTFormPts'] = playing_stat['HTFormPtsStr'].apply(get_form_points)
-playing_stat['ATFormPts'] = playing_stat['ATFormPtsStr'].apply(get_form_points)
+playing_stat['HTFormPts'] = playing_stat['HTFormPtsStr'].apply(formget_points)
+playing_stat['ATFormPts'] = playing_stat['ATFormPtsStr'].apply(formget_points)
 
 # Identify Win/Loss Streaks if any.
 def get_3game_ws(string):
@@ -1171,10 +1058,6 @@ playing_stat['ATLossStreak5'] = playing_stat['ATFormPtsStr'].apply(get_5game_ls)
 
 playing_stat.keys()
 
-
-# In[ ]:
-
-
 def only_hw(string):
     if string == 'H':
         return 'H'
@@ -1192,26 +1075,12 @@ playing_stat.to_csv('/content/Datasets/final_dataset.csv')
 #saving the test set
 playing_stat_test.to_csv("/content/Datasets/test.csv")
 
-
-
-# In[ ]:
-
-
 #loading the final dataset
 dataset = pd.read_csv('/content/Datasets/final_dataset.csv')
 
 dataset.head()
 
-
-
-# In[ ]:
-
-
 dataset.keys()
-
-
-# In[ ]:
-
 
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -1237,10 +1106,6 @@ sns.heatmap(correlation_matrix, annot=True, fmt='.2f', cmap='coolwarm', linewidt
 # Show the plot
 plt.show()
 
-
-# In[ ]:
-
-
 # Print all column names in the dataset to verify their existence
 print(dataset.columns)
 
@@ -1259,22 +1124,9 @@ dataset2 = dataset.copy().drop(columns=columns_to_drop)
 # Check the resulting dataframe
 print(dataset2.head())
 
-
-# In[ ]:
-
-
 dataset2.keys()
 
-
-
-# In[ ]:
-
-
 dataset2.head(10)
-
-
-# In[ ]:
-
 
 #what is the win rate for the home team?
 
@@ -1296,102 +1148,55 @@ print ("Number of features: {}".format(n_features))
 print( "Number of matches won by home team: {}".format(n_homewins))
 print ("Win rate of home team: {:.2f}%".format(win_rate))
 
-
-# In[ ]:
-
-
-import pandas as pd
-from sklearn.preprocessing import scale
-from sklearn.model_selection import train_test_split
-
-# Assuming dataset2 is already defined and contains the data
-
 # Split the dataset into features and target variable
 X_all = dataset2.drop(['FTR'], axis=1)
 y_all = dataset2['FTR']
 
-# Check available columns in X_all
-print("Columns in X_all:", X_all.columns)
+# Standardizing numerical features
+cols = [['HTGD', 'ATGD', 'HTP', 'ATP']]
+for col in cols:
+    X_all[col] = scale(X_all[col])
 
-# Define the columns you want to standardize
-cols_to_scale = ['HTGD', 'ATGD', 'HTP', 'ATP']
+# Convert categorical features to dummy variables
+X_all = pd.get_dummies(X_all, columns=['HM1', 'HM2', 'HM3', 'AM1', 'AM2', 'AM3'], drop_first=True)
 
-# Verify if the columns are present
-missing_cols = [col for col in cols_to_scale if col not in X_all.columns]
-if missing_cols:
-    print(f"The following columns are missing: {missing_cols}")
-else:
-    # Standardizing numerical features
-    X_all[cols_to_scale] = scale(X_all[cols_to_scale])
-
-    # Convert categorical features to dummy variables
-    X_all = pd.get_dummies(X_all, columns=['HM1', 'HM2', 'HM3', 'AM1', 'AM2', 'AM3'], drop_first=True)
-
-    # Split the data into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(X_all, y_all, test_size=0.3, random_state=2, stratify=y_all)
-
-    print("Shape of X_train:", X_train.shape)
-    print("Shape of X_test:", X_test.shape)
-
-
-
-
-# # Adjust according to actual column names found in your dataset
-# if 'HTGD' not in dataset2.columns:
-#     dataset2['HTGD'] = dataset2['GoalsFor_Home'] - dataset2['GoalsAgainst_Home']  # Home team goal difference
-# if 'ATGD' not in dataset2.columns:
-#     dataset2['ATGD'] = dataset2['GoalsFor_Away'] - dataset2['GoalsAgainst_Away']  # Away team goal difference
-# if 'HTP' not in dataset2.columns:
-#     dataset2['HTP'] = dataset2['Points_Home']  # Adjust based on the actual column name
-# if 'ATP' not in dataset2.columns:
-#     dataset2['ATP'] = dataset2['Points_Away']  # Adjust based on the actual column name
-# 
-
-# In[ ]:
-
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X_all, y_all, test_size=0.3, random_state=2, stratify=y_all)
 
 import pandas as pd
 
-# Check available columns in X_all before attempting to convert types
-print("Columns in X_all:", X_all.columns)
+# Convert last 3 wins columns to string type
+X_all['HM1'] = X_all['HM1'].astype('str')
+X_all['HM2'] = X_all['HM2'].astype('str')
+X_all['HM3'] = X_all['HM3'].astype('str')
+X_all['AM1'] = X_all['AM1'].astype('str')
+X_all['AM2'] = X_all['AM2'].astype('str')
+X_all['AM3'] = X_all['AM3'].astype('str')
 
-# Check if 'HM1', 'HM2', 'HM3', 'AM1', 'AM2', 'AM3' exist in X_all
-expected_cols = ['HM1', 'HM2', 'HM3', 'AM1', 'AM2', 'AM3']
-missing_cols = [col for col in expected_cols if col not in X_all.columns]
-if missing_cols:
-    print(f"The following columns are missing: {missing_cols}")
-else:
-    # Convert last 3 wins columns to string type
-    X_all['HM1'] = X_all['HM1'].astype('str')
-    X_all['HM2'] = X_all['HM2'].astype('str')
-    X_all['HM3'] = X_all['HM3'].astype('str')
-    X_all['AM1'] = X_all['AM1'].astype('str')
-    X_all['AM2'] = X_all['AM2'].astype('str')
-    X_all['AM3'] = X_all['AM3'].astype('str')
+# Function to preprocess features
+def preprocess_features(X):
+    ''' Preprocesses the football data and converts categorical variables into dummy variables. '''
 
-    # Function to preprocess features
-    def preprocess_features(X):
-        ''' Preprocesses the football data and converts categorical variables into dummy variables. '''
-        output = pd.DataFrame(index=X.index)
-        for col, col_data in X.items():
-            if col_data.dtype == object:
-                col_data = pd.get_dummies(col_data, prefix=col)
-            output = output.join(col_data)
-        return output
+    # Initialize new output DataFrame
+    output = pd.DataFrame(index = X.index)
 
-    # Apply preprocessing
-    X_all = preprocess_features(X_all)
-    print("Processed feature columns ({} total features):\n{}".format(len(X_all.columns), list(X_all.columns)))
+    # Investigate each feature column for the data
+    for col, col_data in X.items():  # Use .items() instead of .iteritems()
 
+        # If data type is categorical, convert to dummy variables
+        if col_data.dtype == object:
+            col_data = pd.get_dummies(col_data, prefix=col)
 
-# In[ ]:
+        # Collect the revised columns
+        output = output.join(col_data)
 
+    return output
+
+# Apply preprocessing
+X_all = preprocess_features(X_all)
+print("Processed feature columns ({} total features):\n{}".format(len(X_all.columns), list(X_all.columns)))
 
 X_all.head(10)
-
-
-# In[ ]:
-
 
 from sklearn.model_selection import train_test_split
 
@@ -1400,10 +1205,6 @@ X_train, X_test, y_train, y_test = train_test_split(X_all, y_all,
                                                     test_size = 0.3,
                                                     random_state = 2,
                                                     stratify = y_all)
-
-
-# In[ ]:
-
 
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
@@ -1420,10 +1221,6 @@ pipeline = Pipeline([
 
 # Fit the pipeline on the training set
 pipeline.fit(X_train, y_train)
-
-
-# In[ ]:
-
 
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
@@ -1445,10 +1242,6 @@ pipeline.fit(X_train, y_train)
 X_train_imputed = pipeline.named_steps['imputer'].transform(X_train)
 X_test_imputed = pipeline.named_steps['imputer'].transform(X_test)
 
-
-# In[ ]:
-
-
 # Import necessary libraries
 import pandas as pd
 import numpy as np
@@ -1465,16 +1258,12 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import scale
 from sklearn.metrics import f1_score, make_scorer
 
-
-# In[ ]:
-
-
 # Extract relevant columns and concatenate data
 columns_req = ['Date', 'HomeTeam', 'AwayTeam', 'FTHG', 'FTAG', 'FTR']
 playing_statistics = [df[columns_req] for df in datasets]
 
 # Function to calculate goals scored
-def get_goals_scored(playing_stat):
+def scored_goals(playing_stat):
     teams = {team: [] for team in playing_stat['HomeTeam'].unique()}
     for i in range(len(playing_stat)):
         HTGS = playing_stat.iloc[i]['FTHG']
@@ -1488,7 +1277,7 @@ def get_goals_scored(playing_stat):
     return GoalsScored
 
 # Function to calculate goals conceded
-def get_goals_conceded(playing_stat):
+def conceded_goals(playing_stat):
     teams = {team: [] for team in playing_stat['HomeTeam'].unique()}
     for i in range(len(playing_stat)):
         ATGC = playing_stat.iloc[i]['FTHG']
@@ -1502,9 +1291,9 @@ def get_goals_conceded(playing_stat):
     return GoalsConceded
 
 # Function to get goals scored and conceded statistics
-def get_gss(playing_stat):
-    GC = get_goals_conceded(playing_stat)
-    GS = get_goals_scored(playing_stat)
+def gss(playing_stat):
+    GC = conceded_goals(playing_stat)
+    GS = scored_goals(playing_stat)
     HTGS, ATGS, HTGC, ATGC = [], [], [], []
     j = 0
     for i in range(len(playing_stat)):
@@ -1523,10 +1312,10 @@ def get_gss(playing_stat):
     return playing_stat
 
 # Apply the function to each dataset
-playing_statistics = [get_gss(df) for df in playing_statistics]
+playing_statistics = [gss(df) for df in playing_statistics]
 
 # Function to calculate cumulative points
-def get_points(result):
+def points_get(result):
     if result == 'W':
         return 3
     elif result == 'D':
@@ -1534,14 +1323,14 @@ def get_points(result):
     else:
         return 0
 
-def get_cuml_points(matchres):
-    matchres_points = matchres.applymap(get_points)
+def cuml_points(matchres):
+    matchres_points = matchres.applymap(points_get)
     for i in range(2, 39):
         matchres_points[i] = matchres_points[i] + matchres_points[i-1]
     matchres_points.insert(column=0, loc=0, value=[0] * len(matchres_points))
     return matchres_points
 
-def get_matchres(playing_stat):
+def matchres(playing_stat):
     teams = {team: [] for team in playing_stat['HomeTeam'].unique()}
     for i in range(len(playing_stat)):
         if playing_stat.iloc[i].FTR == 'H':
@@ -1555,9 +1344,9 @@ def get_matchres(playing_stat):
             teams[playing_stat.iloc[i].HomeTeam].append('D')
     return pd.DataFrame(data=teams, index=[i for i in range(1, 39)]).T
 
-def get_agg_points(playing_stat):
-    matchres = get_matchres(playing_stat)
-    cum_pts = get_cuml_points(matchres)
+def get_aggg_points(playing_stat):
+    matchres = matchres(playing_stat)
+    cum_pts = cuml_points(matchres)
     HTP, ATP = [], []
     j = 0
     for i in range(len(playing_stat)):
@@ -1572,11 +1361,11 @@ def get_agg_points(playing_stat):
     return playing_stat
 
 # Apply the function to each dataset
-playing_statistics = [get_agg_points(df) for df in playing_statistics]
+playing_statistics = [get_aggg_points(df) for df in playing_statistics]
 
 # Function to get team form
-def get_form(playing_stat, num):
-    form = get_matchres(playing_stat)
+def formget(playing_stat, num):
+    form = matchres(playing_stat)
     form_final = form.copy()
     for i in range(num, 39):
         form_final[i] = ''
@@ -1586,8 +1375,8 @@ def get_form(playing_stat, num):
             j += 1
     return form_final
 
-def add_form(playing_stat, num):
-    form = get_form(playing_stat, num)
+def addform(playing_stat, num):
+    form = formget(playing_stat, num)
     h = ['M' for _ in range(num * 10)]
     a = ['M' for _ in range(num * 10)]
     j = num
@@ -1602,13 +1391,13 @@ def add_form(playing_stat, num):
     playing_stat[f'AM{num}'] = a
     return playing_stat
 
-def add_form_df(playing_statistics):
+def addform_df(playing_statistics):
     for num in range(1, 6):
-        playing_statistics = [add_form(df, num) for df in playing_statistics]
+        playing_statistics = [addform(df, num) for df in playing_statistics]
     return playing_statistics
 
 # Add form data to datasets
-playing_statistics = add_form_df(playing_statistics)
+playing_statistics = addform_df(playing_statistics)
 
 # Rearrange columns
 cols = ['Date', 'HomeTeam', 'AwayTeam', 'FTHG', 'FTAG', 'FTR', 'HTGS', 'ATGS', 'HTGC', 'ATGC', 'HTP', 'ATP',
@@ -1635,8 +1424,8 @@ playing_stat = pd.concat(playing_statistics, ignore_index=True)
 # Add form points
 playing_stat['HTFormPtsStr'] = playing_stat['HM1'] + playing_stat['HM2'] + playing_stat['HM3'] + playing_stat['HM4'] + playing_stat['HM5']
 playing_stat['ATFormPtsStr'] = playing_stat['AM1'] + playing_stat['AM2'] + playing_stat['AM3'] + playing_stat['AM4'] + playing_stat['AM5']
-playing_stat['HTFormPts'] = playing_stat['HTFormPtsStr'].apply(get_form_points)
-playing_stat['ATFormPts'] = playing_stat['ATFormPtsStr'].apply(get_form_points)
+playing_stat['HTFormPts'] = playing_stat['HTFormPtsStr'].apply(formget_points)
+playing_stat['ATFormPts'] = playing_stat['ATFormPtsStr'].apply(formget_points)
 
 # Identify Win/Loss Streaks
 playing_stat['HTWinStreak3'] = playing_stat['HTFormPtsStr'].apply(get_3game_ws)
@@ -1707,10 +1496,6 @@ def evaluate_model(model, X_test, y_test):
     plt.show()
     print(classification_report(y_test, y_pred))
 
-
-# In[ ]:
-
-
 from sklearn.preprocessing import LabelEncoder
 
 # Encode target labels with value between 0 and n_classes-1
@@ -1719,25 +1504,25 @@ y_train_encoded = label_encoder.fit_transform(y_train)
 y_test_encoded = label_encoder.transform(y_test)
 
 # Logistic Regression
-lr_model = LogisticRegression(random_state=0)
-lr_model.fit(X_train, y_train_encoded)
-evaluate_model(lr_model, X_train, y_train_encoded)
+lor_model = LogisticRegression(random_state=0)
+lor_model.fit(X_train, y_train_encoded)
+evaluate_model(lor_model, X_train, y_train_encoded)
 
 # SVM
-svm_model = SVC(kernel='rbf', random_state=0)
-svm_model.fit(X_train, y_train_encoded)
-evaluate_model(svm_model, X_train, y_train_encoded)
+svm_mdl = SVC(kernel='rbf', random_state=0)
+svm_mdl.fit(X_train, y_train_encoded)
+evaluate_model(svm_mdl, X_train, y_train_encoded)
 
 # Random Forest
-rf_model = RandomForestClassifier(criterion='gini', n_estimators=700, min_samples_split=10, min_samples_leaf=1,
+raf_model = RandomForestClassifier(criterion='gini', n_estimators=700, min_samples_split=10, min_samples_leaf=1,
                                   max_features='sqrt', oob_score=True, random_state=1, n_jobs=-1)
-rf_model.fit(X_train, y_train_encoded)
-evaluate_model(rf_model, X_train, y_train_encoded)
+raf_model.fit(X_train, y_train_encoded)
+evaluate_model(raf_model, X_train, y_train_encoded)
 
 # XGBoost
-xgb_model = XGBClassifier(seed=82)
-xgb_model.fit(X_train, y_train_encoded)
-evaluate_model(xgb_model,X_train, y_train_encoded)
+xgb_mdl = XGBClassifier(seed=82)
+xgb_mdl.fit(X_train, y_train_encoded)
+evaluate_model(xgb_mdl,X_train, y_train_encoded)
 
 # Hyperparameter Tuning for XGBoost
 parameters = {
@@ -1761,16 +1546,12 @@ print("Best XGBoost model:", best_xgb)
 # Evaluate the best model
 evaluate_model(best_xgb, X_test, y_test_encoded)
 
-
-# In[ ]:
-
-
 # Extract relevant columns and concatenate data
 columns_req = ['Date', 'HomeTeam', 'AwayTeam', 'FTHG', 'FTAG', 'FTR']
 playing_statistics = [df[columns_req] for df in datasets]
 
 # Function to calculate goals scored
-def get_goals_scored(playing_stat):
+def scored_goals(playing_stat):
     teams = {team: [] for team in playing_stat['HomeTeam'].unique()}
     for i in range(len(playing_stat)):
         HTGS = playing_stat.iloc[i]['FTHG']
@@ -1784,7 +1565,7 @@ def get_goals_scored(playing_stat):
     return GoalsScored
 
 # Function to calculate goals conceded
-def get_goals_conceded(playing_stat):
+def conceded_goals(playing_stat):
     teams = {team: [] for team in playing_stat['HomeTeam'].unique()}
     for i in range(len(playing_stat)):
         ATGC = playing_stat.iloc[i]['FTHG']
@@ -1798,9 +1579,9 @@ def get_goals_conceded(playing_stat):
     return GoalsConceded
 
 # Function to get goals scored and conceded statistics
-def get_gss(playing_stat):
-    GC = get_goals_conceded(playing_stat)
-    GS = get_goals_scored(playing_stat)
+def gss(playing_stat):
+    GC = conceded_goals(playing_stat)
+    GS = scored_goals(playing_stat)
     HTGS, ATGS, HTGC, ATGC = [], [], [], []
     j = 0
     for i in range(len(playing_stat)):
@@ -1819,10 +1600,10 @@ def get_gss(playing_stat):
     return playing_stat
 
 # Apply the function to each dataset
-playing_statistics = [get_gss(df) for df in playing_statistics]
+playing_statistics = [gss(df) for df in playing_statistics]
 
 # Function to calculate cumulative points
-def get_points(result):
+def points_get(result):
     if result == 'W':
         return 3
     elif result == 'D':
@@ -1830,14 +1611,14 @@ def get_points(result):
     else:
         return 0
 
-def get_cuml_points(matchres):
-    matchres_points = matchres.applymap(get_points)
+def cuml_points(matchres):
+    matchres_points = matchres.applymap(points_get)
     for i in range(2, 39):
         matchres_points[i] = matchres_points[i] + matchres_points[i-1]
     matchres_points.insert(column=0, loc=0, value=[0] * len(matchres_points))
     return matchres_points
 
-def get_matchres(playing_stat):
+def matchres(playing_stat):
     teams = {team: [] for team in playing_stat['HomeTeam'].unique()}
     for i in range(len(playing_stat)):
         if playing_stat.iloc[i].FTR == 'H':
@@ -1851,9 +1632,9 @@ def get_matchres(playing_stat):
             teams[playing_stat.iloc[i].HomeTeam].append('D')
     return pd.DataFrame(data=teams, index=[i for i in range(1, 39)]).T
 
-def get_agg_points(playing_stat):
-    matchres = get_matchres(playing_stat)
-    cum_pts = get_cuml_points(matchres)
+def get_aggg_points(playing_stat):
+    matchres = matchres(playing_stat)
+    cum_pts = cuml_points(matchres)
     HTP, ATP = [], []
     j = 0
     for i in range(len(playing_stat)):
@@ -1868,11 +1649,11 @@ def get_agg_points(playing_stat):
     return playing_stat
 
 # Apply the function to each dataset
-playing_statistics = [get_agg_points(df) for df in playing_statistics]
+playing_statistics = [get_aggg_points(df) for df in playing_statistics]
 
 # Function to get team form
-def get_form(playing_stat, num):
-    form = get_matchres(playing_stat)
+def formget(playing_stat, num):
+    form = matchres(playing_stat)
     form_final = form.copy()
     for i in range(num, 39):
         form_final[i] = ''
@@ -1882,8 +1663,8 @@ def get_form(playing_stat, num):
             j += 1
     return form_final
 
-def add_form(playing_stat, num):
-    form = get_form(playing_stat, num)
+def addform(playing_stat, num):
+    form = formget(playing_stat, num)
     h = ['M' for _ in range(num * 10)]
     a = ['M' for _ in range(num * 10)]
     j = num
@@ -1898,13 +1679,13 @@ def add_form(playing_stat, num):
     playing_stat[f'AM{num}'] = a
     return playing_stat
 
-def add_form_df(playing_statistics):
+def addform_df(playing_statistics):
     for num in range(1, 6):
-        playing_statistics = [add_form(df, num) for df in playing_statistics]
+        playing_statistics = [addform(df, num) for df in playing_statistics]
     return playing_statistics
 
 # Add form data to datasets
-playing_statistics = add_form_df(playing_statistics)
+playing_statistics = addform_df(playing_statistics)
 
 # Rearrange columns
 cols = ['Date', 'HomeTeam', 'AwayTeam', 'FTHG', 'FTAG', 'FTR', 'HTGS', 'ATGS', 'HTGC', 'ATGC', 'HTP', 'ATP',
@@ -1931,8 +1712,8 @@ playing_stat = pd.concat(playing_statistics, ignore_index=True)
 # Add form points
 playing_stat['HTFormPtsStr'] = playing_stat['HM1'] + playing_stat['HM2'] + playing_stat['HM3'] + playing_stat['HM4'] + playing_stat['HM5']
 playing_stat['ATFormPtsStr'] = playing_stat['AM1'] + playing_stat['AM2'] + playing_stat['AM3'] + playing_stat['AM4'] + playing_stat['AM5']
-playing_stat['HTFormPts'] = playing_stat['HTFormPtsStr'].apply(get_form_points)
-playing_stat['ATFormPts'] = playing_stat['ATFormPtsStr'].apply(get_form_points)
+playing_stat['HTFormPts'] = playing_stat['HTFormPtsStr'].apply(formget_points)
+playing_stat['ATFormPts'] = playing_stat['ATFormPtsStr'].apply(formget_points)
 
 # Identify Win/Loss Streaks
 playing_stat['HTWinStreak3'] = playing_stat['HTFormPtsStr'].apply(get_3game_ws)
@@ -2003,10 +1784,6 @@ def evaluate_model(model, X_test, y_test):
     plt.show()
     print(classification_report(y_test, y_pred))
 
-
-# In[ ]:
-
-
 from sklearn.preprocessing import LabelEncoder
 
 # Encode target labels with value between 0 and n_classes-1
@@ -2015,25 +1792,25 @@ y_train_encoded = label_encoder.fit_transform(y_train)
 y_test_encoded = label_encoder.transform(y_test)
 
 # Logistic Regression
-lr_model = LogisticRegression(random_state=0)
-lr_model.fit(X_train, y_train_encoded)
-evaluate_model(lr_model, X_test, y_test_encoded)
+lor_model = LogisticRegression(random_state=0)
+lor_model.fit(X_train, y_train_encoded)
+evaluate_model(lor_model, X_test, y_test_encoded)
 
 # SVM
-svm_model = SVC(kernel='rbf', random_state=0)
-svm_model.fit(X_train, y_train_encoded)
-evaluate_model(svm_model, X_test, y_test_encoded)
+svm_mdl = SVC(kernel='rbf', random_state=0)
+svm_mdl.fit(X_train, y_train_encoded)
+evaluate_model(svm_mdl, X_test, y_test_encoded)
 
 # Random Forest
-rf_model = RandomForestClassifier(criterion='gini', n_estimators=700, min_samples_split=10, min_samples_leaf=1,
+raf_model = RandomForestClassifier(criterion='gini', n_estimators=700, min_samples_split=10, min_samples_leaf=1,
                                   max_features='sqrt', oob_score=True, random_state=1, n_jobs=-1)
-rf_model.fit(X_train, y_train_encoded)
-evaluate_model(rf_model, X_test, y_test_encoded)
+raf_model.fit(X_train, y_train_encoded)
+evaluate_model(raf_model, X_test, y_test_encoded)
 
 # XGBoost
-xgb_model = XGBClassifier(seed=82)
-xgb_model.fit(X_train, y_train_encoded)
-evaluate_model(xgb_model, X_test, y_test_encoded)
+xgb_mdl = XGBClassifier(seed=82)
+xgb_mdl.fit(X_train, y_train_encoded)
+evaluate_model(xgb_mdl, X_test, y_test_encoded)
 
 # Hyperparameter Tuning for XGBoost
 parameters = {
@@ -2056,10 +1833,6 @@ print("Best XGBoost model:", best_xgb)
 
 # Evaluate the best model
 evaluate_model(best_xgb, X_test, y_test_encoded)
-
-
-# In[ ]:
-
 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import GradientBoostingClassifier
@@ -2088,25 +1861,25 @@ y_train_encoded = label_encoder.fit_transform(y_train)
 y_test_encoded = label_encoder.transform(y_test)
 
 # Logistic Regression
-lr_model = LogisticRegression(random_state=0)
-lr_model.fit(X_train, y_train_encoded)
-evaluate_model_with_metrics(lr_model, X_test, y_test_encoded)
+lor_model = LogisticRegression(random_state=0)
+lor_model.fit(X_train, y_train_encoded)
+evaluate_model_with_metrics(lor_model, X_test, y_test_encoded)
 
 # SVM
-svm_model = SVC(kernel='rbf', random_state=0)
-svm_model.fit(X_train, y_train_encoded)
-evaluate_model_with_metrics(svm_model, X_test, y_test_encoded)
+svm_mdl = SVC(kernel='rbf', random_state=0)
+svm_mdl.fit(X_train, y_train_encoded)
+evaluate_model_with_metrics(svm_mdl, X_test, y_test_encoded)
 
 # Random Forest
-rf_model = RandomForestClassifier(criterion='gini', n_estimators=700, min_samples_split=10, min_samples_leaf=1,
+raf_model = RandomForestClassifier(criterion='gini', n_estimators=700, min_samples_split=10, min_samples_leaf=1,
                                   max_features='sqrt', oob_score=True, random_state=1, n_jobs=-1)
-rf_model.fit(X_train, y_train_encoded)
-evaluate_model_with_metrics(rf_model, X_test, y_test_encoded)
+raf_model.fit(X_train, y_train_encoded)
+evaluate_model_with_metrics(raf_model, X_test, y_test_encoded)
 
 # XGBoost
-xgb_model = XGBClassifier(seed=82)
-xgb_model.fit(X_train, y_train_encoded)
-evaluate_model_with_metrics(xgb_model, X_test, y_test_encoded)
+xgb_mdl = XGBClassifier(seed=82)
+xgb_mdl.fit(X_train, y_train_encoded)
+evaluate_model_with_metrics(xgb_mdl, X_test, y_test_encoded)
 
 # Gradient Boosting Machines (GBM)
 gbm_model = GradientBoostingClassifier(random_state=0)
@@ -2134,10 +1907,6 @@ print("Best XGBoost model:", best_xgb)
 
 # Evaluate the best XGBoost model
 evaluate_model_with_metrics(best_xgb, X_test, y_test_encoded)
-
-
-# In[ ]:
-
 
 from sklearn.model_selection import RandomizedSearchCV
 import numpy as np
@@ -2193,5 +1962,6 @@ grid_xgb = RandomizedSearchCV(XGBClassifier(seed=2), param_distributions=param_g
 grid_xgb.fit(X_train, y_train_encoded)
 best_xgb = grid_xgb.best_estimator_
 print("Best XGBoost model:", best_xgb)
+evaluate_model_with_metrics(best_xgb, X_test, y_test_encoded)
 evaluate_model_with_metrics(best_xgb, X_test, y_test_encoded)
 
